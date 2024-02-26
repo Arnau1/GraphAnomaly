@@ -1,2 +1,4 @@
+#Carpetes Local que no s'han de comitejar
 tests_guillem/
 sintesis_venv/
+dades_guillem/
