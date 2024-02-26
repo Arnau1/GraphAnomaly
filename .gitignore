@@ -2,3 +2,5 @@
 tests_guillem/
 sintesis_venv/
 dades_guillem/
+elliptic_bitcoin_dataset/
+.conda/
