@@ -2,6 +2,7 @@
 tests_guillem/
 sintesis_venv/
 dades_guillem/
+dades_marti/
 elliptic_bitcoin_dataset/
 .conda/
 elipticData_graph.pkl
