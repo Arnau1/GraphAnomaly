@@ -9,3 +9,5 @@ elipticData_graph.pkl
 Twitter_May_Aug_2014.txt
 twitter.graphml
 node2vec-aditya-grover/
+elipticData_G.pkl
+elipticData_subgraph29.pkl
