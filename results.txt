@@ -1,0 +1,14 @@
+
+Logistic regression applied with PCA: 
+
+Accuracy: 95.87%
+Precision: 83.20413436692506%
+Recall: 71.64%
+F1 Score: 76.99%
+
+Logistic regression applied to the raw data: 
+
+Accuracy: 96.04%
+Precision: 82.3960880195599%
+Recall: 74.97%
+F1 Score: 78.51%
