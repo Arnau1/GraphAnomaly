@@ -3,9 +3,11 @@ tests_guillem/
 sintesis_venv/
 dades_guillem/
 dades_marti/
+dades_arnau/
 elliptic_bitcoin_dataset/
 .conda/
 elipticData_graph.pkl
 Twitter_May_Aug_2014.txt
 twitter.graphml
 sec/
+wandb/
