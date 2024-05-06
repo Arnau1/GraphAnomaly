@@ -22,12 +22,15 @@ class machineLearning:
     def __init__(self, df):
         self.df = df
         self.results = pd.DataFrame(columns=["Classifier", "Accuracy", "Precision", "Recall", "F1 score"])
-   
+        self.df_pca = None
     def apply_PCA(self, ncomponents):
         # Standardize the features (important for PCA)
         scaler = StandardScaler()
-
-        df_pca = self.df.drop(columns=['class'])
+        
+        if 'class' in self.df.columns:
+            df_pca = self.df.drop(columns=['class'])
+        else:
+            df_pca = self.df
         scaled_data = scaler.fit_transform(df_pca)
 
         # Apply PCA
@@ -47,17 +50,29 @@ class machineLearning:
         
         # Add two columns to be able to apply ML models later on
         principal_df['txId'] = df_pca.index
-        principal_df['class'] = list(df_balanced['class'])
+        principal_df['class'] = list(self.df['class'])
         
+        self.df_pca = principal_df
         return principal_df
     
     
-    def train_and_test(self, df_PCA, algorithm, display_conf_matrix=False):
-        X = df_PCA.loc[df_PCA['class'].isin(['1', '2'])].drop(columns=['txId', 'class'])
-        y = df_PCA.loc[df_PCA['class'].isin(['1', '2'])]['class']
-        # print(set(list(principal_df.loc[principal_df['class'].isin(['1', '2'])]['class'])))
+    def train_and_test(self, algorithm, use_pca=True, display_conf_matrix=False, modeMarti=False):
+        # Using node2vec we are don't need a PCA because we aro not working with that many dimensions
+        if use_pca:
+            df = self.df_pca
+        else:
+            df = self.df
+        # Select the type of class labeling
+        if modeMarti:
+            X = df.loc[df['class'].isin([0,1])].drop(columns=['txId', 'class'])
+            y = df.loc[df['class'].isin([0,1])]['class']
+        else:
+            X = df.loc[df['class'].isin(['1', '2'])].drop(columns=['txId', 'class'])
+            y = df.loc[df['class'].isin(['1', '2'])]['class']
+        # Split the dataset
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
         
+        # Select model
         print(f"\nTraining {algorithm}...\n")
         try:
             if algorithm == "Logistic regression":
@@ -71,48 +86,45 @@ class machineLearning:
             
             elif algorithm == "Decision tree":
                 model = DecisionTreeClassifier()
-            
         except:
             return "Error! No machine learning model chosen."
-        
-        
+        # Fit data into model
         model.fit(X_train, y_train)
 
         # Evaluate the model
         y_pred = model.predict(X_test)
-        
+        # Model evaluation metrics
         print(f"Testing {algorithm}...\n")
         accuracy = round(accuracy_score(y_test, y_pred), 2)
         print("Accuracy: {:.2f}%".format(accuracy * 100))
-        
-        precision = round(precision_score(y_test, y_pred, pos_label='1'), 2)
+        if modeMarti:
+            precision = round(precision_score(y_test, y_pred, pos_label=1), 2)
+        else:
+            precision = round(precision_score(y_test, y_pred, pos_label='1'), 2)
         print("Precision: {:.2f}%".format(precision * 100))
-        
-        recall = round(recall_score(y_test, y_pred, pos_label='1'), 2)
+        if modeMarti:
+            recall = round(recall_score(y_test, y_pred, pos_label=1), 2)
+        else:
+            recall = round(recall_score(y_test, y_pred, pos_label='1'), 2)        
         print("Recall: {:.2f}%".format(recall * 100))
-        
-        f1 = round(f1_score(y_test, y_pred, pos_label='1'),2)
+        if modeMarti:
+            f1 = round(f1_score(y_test, y_pred, pos_label=1),2)
+        else:
+            f1 = round(f1_score(y_test, y_pred, pos_label='1'),2)
         print("F1 Score: {:.2f}%".format(f1 * 100))
         
         self.results.loc[len(self.results)] = [algorithm, accuracy, precision, recall, f1]
         
+        # Visualization of the metrics
         if display_conf_matrix:
-            cm = confusion_matrix(y_test, y_pred, labels=['1', '2'])
+            if modeMarti:
+                cm = confusion_matrix(y_test, y_pred, labels=[1,0])
+            else:
+                cm = confusion_matrix(y_test, y_pred, labels=['1', '2'])
             disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=['Ilicit', 'Licit'])
             disp.plot()
             plt.title(algorithm)
             plt.show()
-
-
-            # conf_matrix = confusion_matrix(y_test, y_pred)
-            # plt.figure(figsize=(8, 6))
-            # sns.heatmap(conf_matrix, annot=True, fmt='g', cmap='Blues', 
-            #             xticklabels=model.classes_, 
-            #             yticklabels=model.classes_)
-            # plt.xlabel('Predicted Labels')
-            # plt.ylabel('True Labels')
-            # plt.title(f'Confusion Matrix for {algorithm}')
-            # plt.show()
-    
+            
     def get_results(self):
         return self.results
