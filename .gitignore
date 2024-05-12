@@ -15,3 +15,4 @@ elipticData_subgraph29.pkl
 labeled_extended.csv
 sec/
 wandb/
+trained_models/
