@@ -1,0 +1,4 @@
+,Classifier,Accuracy,Precision,Recall,F1 score
+0,Decision tree,0.96,0.91,0.9,0.91
+1,Random forest,0.98,0.99,0.92,0.96
+2,SVM,0.8,0.0,0.0,0.0
