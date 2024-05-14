@@ -21,3 +21,4 @@ TestSet_Grpah.pkl
 TrainSet_Grpah.pkl
 trained_models/
 sintEnv/
+.venv/
