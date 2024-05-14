@@ -1,7 +1,8 @@
-from sklearn.model_selection import train_test_split
-from sklearn.cluster import KMeans
-from sklearn.decomposition import PCA
-from sklearn.preprocessing import StandardScaler
+import numpy as np # type: ignore
+from sklearn.model_selection import train_test_split # type: ignore
+from sklearn.cluster import KMeans # type: ignore
+from sklearn.decomposition import PCA # type: ignore
+from sklearn.preprocessing import StandardScaler # type: ignore
 
 from collections import Counter
 
