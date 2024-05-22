@@ -1,0 +1,10 @@
+ensemble_clf = VotingClassifier(estimators=[
+    ('logistic', logistic_clf), 
+    ('tree', tree_clf),
+    ('random_forest', random_forest_clf),
+    ('gradient_boosting', gradient_boosting_clf)
+], voting='soft')
+
+
+Class 0: Precision=0.9537480063795853, Recall=0.6385477843032568, F1-score=0.7649504317236968
+Class 1: Precision=0.9152054108216433, Recall=0.9921249151391718, F1-score=0.9521141442439247

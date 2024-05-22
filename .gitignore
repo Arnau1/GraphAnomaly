@@ -19,3 +19,6 @@ test_set.csv
 train_set.csv
 TestSet_Grpah.pkl
 TrainSet_Grpah.pkl
+trained_models/
+sintEnv/
+.venv/

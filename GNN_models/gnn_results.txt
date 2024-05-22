@@ -1,0 +1,13 @@
+Nodes classified as fraud: 2656, 
+                nodes classified as licit: 34670
+Epoch: 100, 
+            Training Loss: 0.0142, Training Accuracy: 0.9964
+            Test Loss: 0.2910, Test Accuracy: 0.9568
+            
+Precision: [0.92307692 0.96464781], Recall: [0.85851575 0.98180584], F1 Score: [0.88962656 0.9731512 ] 
+
+
+MODEL PER ELS UNKNOWN:
+
+Value 0: 7341 occurrences
+Value 1: 115940 occurrences
