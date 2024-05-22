@@ -3,6 +3,7 @@ from sklearn.model_selection import train_test_split # type: ignore
 from sklearn.cluster import KMeans # type: ignore
 from sklearn.decomposition import PCA # type: ignore
 from sklearn.preprocessing import StandardScaler # type: ignore
+from sklearn.metrics import * #type: ignore
 
 from collections import Counter
 
@@ -11,10 +12,9 @@ class Cluster_Then_Label():
     def __init__(self, df, classes, n_clusters=8):
         self.data = StandardScaler().fit_transform(df)
         self.y = np.array(classes)
-        self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(self.data,
-                                                                                self.y,
-                                                                                test_size=0.2)
-        self.test_indices = X_test.index.tolist()
+        indices = df.index.tolist()
+        splits = self.X_train, self.X_test, self.y_train, self.y_test, self.train_indices, self.test_indices
+        splits= train_test_split(self.data, self.y, indices, test_size=0.2)
         print(self.test_indices)
         self.n_clusters = n_clusters
 
