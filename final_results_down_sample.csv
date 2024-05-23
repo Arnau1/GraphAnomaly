@@ -1,2 +1,2 @@
 ,Classifier,Accuracy,Precision,Recall,F1 score
-0,Decision tree,0.96,0.91,0.91,0.91
+0,Decision tree,0.96,0.92,0.9,0.91
