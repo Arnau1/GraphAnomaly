@@ -32,3 +32,7 @@ def split_labels_classes(train_set, test_set):
     test_licit_y = list(test_set.loc[test_set['class'].isin([1])]['class'])
 
     return X_ilicit, y_ilicit, X_licit, y_licit, test_ilicit_X, test_ilicit_y, test_licit_X, test_licit_y 
+
+
+
+
