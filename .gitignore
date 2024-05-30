@@ -22,3 +22,5 @@ TrainSet_Grpah.pkl
 trained_models/
 sintEnv/
 .venv/
+mostra.csv
+mostra2.csv
