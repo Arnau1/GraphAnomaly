@@ -22,3 +22,12 @@ TrainSet_Grpah.pkl
 trained_models/
 sintEnv/
 .venv/
+mostra.csv
+mostra2.csv
+esges.pkl
+nodes.pkl
+sequential_train.pkl
+sequential_test.pkl
+sub_test_bal.pkl
+sub_train_bal.pkl
+timesteps.pkl

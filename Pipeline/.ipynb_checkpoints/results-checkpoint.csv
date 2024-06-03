@@ -1,0 +1,6 @@
+Classifier,Accuracy,Precision,Recall,F1 score
+Decision Tree,0.9077,0.3811,0.675,0.4872
+Random Forest,0.9783,0.9349,0.7165,0.8113
+Gradient Boosting,0.9686,0.7783,0.723,0.7496
+Extra Trees,0.9777,0.9552,0.6888,0.8004
+Multi-Layer Perceptron (MLP),0.9347,0.0,0.0,0.0
