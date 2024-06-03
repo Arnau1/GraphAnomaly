@@ -112,6 +112,7 @@ class Cluster_Then_Label():
         # print(substitute)
         # print(self.purities, iter)
         print(f"After {iter+1} iterations:\n- {conversions[0]} nodes were pseudo-labelled as 0.\n- {conversions[1]} node(s) were pseudo labelled as 1.\n")
+        return self.ground_truth_train
 
     def test(self, display_conf_matrix=False):
         # Obtain test slices
