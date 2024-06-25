@@ -1,6 +1,12 @@
 import pandas as pd
 
-# Function to merge timesteps to create train and test sets
+'''
+Function to merge the timesteps into train and test sets.
+
+df_dict is a dictionary where each element is a timestep of the dataset
+method can be sequential (timesteps sorted from 1 to 49) or balanced (timesteps sorted by amount of illicit nodes)
+section is a list
+'''
 def merge_timesteps(df_dict, method, section):
     train_df = pd.DataFrame()         
     test_df = pd.DataFrame()  
@@ -38,7 +44,9 @@ def merge_timesteps(df_dict, method, section):
     return train_df, test_df
 
 
-# Function to separate the labels of the data
+'''
+Function to separate the labels of the data, dropping the unknown nodes. For training.
+'''
 def separate_labels(train_set, test_set):
     train_set = train_set.loc[train_set['class'].isin([0, 1])] # Drop unknown
     y_train = list(train_set['class'])
@@ -51,7 +59,10 @@ def separate_labels(train_set, test_set):
     return X_train, y_train, X_test, y_test
 
 
-# Function to separate both the labels and the classes of the data
+'''
+Function to separate both the labels and the classes of the data, also dropping the unknowns.
+Useful for training the reconstruction error for example, where you need to distinguish by class.
+'''
 def split_labels_classes(train_set, test_set):
     # Split train data in licit and ilicit
     X_ilicit = train_set.loc[train_set['class'].isin([0])] 
@@ -72,7 +83,3 @@ def split_labels_classes(train_set, test_set):
     test_licit_y = list(test_set.loc[test_set['class'].isin([1])]['class'])
 
     return X_ilicit, y_ilicit, X_licit, y_licit, test_ilicit_X, test_ilicit_y, test_licit_X, test_licit_y 
-
-
-
-
