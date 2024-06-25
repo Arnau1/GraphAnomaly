@@ -1,3 +1,43 @@
+import pandas as pd
+
+# Function to merge timesteps to create train and test sets
+def merge_timesteps(df_dict, method, section):
+    train_df = pd.DataFrame()         
+    test_df = pd.DataFrame()  
+
+    if method == 'sequential':
+        for i in range(section[0], section[1]+1):
+            train_df = pd.concat([train_df, df_dict[i]], ignore_index=True)
+
+        for ii in range(section[1]+1, section[2]+1):
+            test_df = pd.concat([test_df, df_dict[ii]], ignore_index=True) 
+    
+    elif method == 'balanced':
+        ilicit_count = []
+        # Sort the time steps given their amount of illicit nodes
+        for key in df_dict.keys():        
+            temp = df_dict[key].groupby('class').count()   
+            temp = temp['node'].reset_index()
+            ilicit_count.append([key, temp[temp['class'] == 0]['node'][0]])
+        ilicit_count.sort(key = lambda row: row[1], reverse=True) 
+
+        for i in range(0, min(section[0]*2, 50), 2):
+            train_df = pd.concat([train_df, df_dict[ilicit_count[i][0]]], ignore_index=True)
+        
+        for ii in range(1, min(section[1]*2, 50), 2):
+            test_df = pd.concat([test_df, df_dict[ilicit_count[ii][0]]], ignore_index=True)
+
+        while (len(train_df['time step'].unique()) < section[0]):
+            ii+=2                       
+            train_df = pd.concat([train_df, df_dict[ilicit_count[ii][0]]], ignore_index=True) 
+        
+        while (len(test_df['time step'].unique()) < section[1]):
+            i+=2                       
+            test_df = pd.concat([test_df, df_dict[ilicit_count[i][0]]], ignore_index=True) 
+    
+    return train_df, test_df
+
+
 # Function to separate the labels of the data
 def separate_labels(train_set, test_set):
     train_set = train_set.loc[train_set['class'].isin([0, 1])] # Drop unknown
