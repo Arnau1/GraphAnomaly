@@ -11,7 +11,7 @@ def separate_labels(train_set, test_set):
     return X_train, y_train, X_test, y_test
 
 
-# Function to separate both the labels and the classes of the dataset
+# Function to separate both the labels and the classes of the data
 def split_labels_classes(train_set, test_set):
     # Split train data in licit and ilicit
     X_ilicit = train_set.loc[train_set['class'].isin([0])] 
