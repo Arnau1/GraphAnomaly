@@ -2,7 +2,7 @@
 The objective of this project is to address a graph-based anomaly detection problem, specifically focusing on identifying anomalous and fraudulent bitcoin transactions within a given dataset. Several folders contain different codes used to achieve a solution:
 - **Pipeline:** In this folder, you can find the pipeline that have been used to construct this project, from the start of the project with processing the dataset, until the more sophisticated models that have been trained.
 
-*The Elliptic dataset used is cannot be uploaded because of its large size.*
+*Note that the Elliptic dataset that has been used to develop the project cannot be uploaded because of its large size.*
 
 
 ## Documentation:
