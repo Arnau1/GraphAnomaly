@@ -1,4 +1,7 @@
 import pandas as pd
+import matplotlib.pyplot as plt  
+from sklearn.metrics import *
+import pandas as pd
 
 '''
 Function to merge the timesteps into train and test sets.
@@ -83,3 +86,46 @@ def split_labels_classes(train_set, test_set):
     test_licit_y = list(test_set.loc[test_set['class'].isin([1])]['class'])
 
     return X_ilicit, y_ilicit, X_licit, y_licit, test_ilicit_X, test_ilicit_y, test_licit_X, test_licit_y 
+
+
+'''
+Function to display the performance of the Machine Learning classifiers
+'''
+def plot(name, y_test, y_pred, save_results=True, df_results=None, CM=False):    
+    # Except for the accuracy, the others compute the metric for the ilicit class
+    print(f"Testing {name}...")
+    accuracy = round(accuracy_score(y_test, y_pred), 4)
+    print("Accuracy: {:.2f}%".format(accuracy * 100))
+    precision = round(precision_score(y_test, y_pred, pos_label=0), 4)
+    print("Precision: {:.2f}%".format(precision * 100))
+    recall = round(recall_score(y_test, y_pred, pos_label=0), 4)
+    print("Recall: {:.2f}%".format(recall * 100))
+    f1 = round(f1_score(y_test, y_pred, pos_label=0),4)
+    print("F1 Score: {:.2f}%\n".format(f1 * 100))
+    
+    if save_results:
+        df_results = pd.DataFrame(columns=["Classifier", "Accuracy", "Precision", "Recall", "F1 score"])
+        if "DecisionTreeClassifier()" in str(name):
+            df_results.loc[len(df_results)] = ["Decision Tree", accuracy, precision, recall, f1]
+        
+        elif "RandomForestClassifier()" in str(name):
+            df_results.loc[len(df_results)] = ["Random Forest", accuracy, precision, recall, f1]
+            
+        elif "GradientBoostingClassifier()" in str(name):
+            df_results.loc[len(df_results)] = ["Gradient Boosting", accuracy, precision, recall, f1]
+        
+        elif "ExtraTreesClassifier()" in str(name):
+            df_results.loc[len(df_results)] = ["Extra Trees", accuracy, precision, recall, f1]
+        
+        else:
+            df_results.loc[len(df_results)] = ["Multi-Layer Perceptron (MLP)", accuracy, precision, recall, f1]
+
+    # Confusion matrix
+    if CM:
+        cm = confusion_matrix(y_test, y_pred, labels=[0, 1])
+        disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=['Ilicit', 'Licit'])
+        disp.plot()
+        plt.title(name)
+        plt.show()
+        
+    return df_results
