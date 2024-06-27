@@ -91,7 +91,7 @@ def split_labels_classes(train_set, test_set):
 '''
 Function to display the performance of the Machine Learning classifiers
 '''
-def plot(name, y_test, y_pred, save_results=True, df_results=None, CM=False):    
+def plot(name, y_test, y_pred, df_results=None, save_results=True, CM=True):    
     # Except for the accuracy, the others compute the metric for the ilicit class
     print(f"Testing {name}...")
     accuracy = round(accuracy_score(y_test, y_pred), 4)
@@ -103,8 +103,7 @@ def plot(name, y_test, y_pred, save_results=True, df_results=None, CM=False):
     f1 = round(f1_score(y_test, y_pred, pos_label=0),4)
     print("F1 Score: {:.2f}%\n".format(f1 * 100))
     
-    if save_results:
-        df_results = pd.DataFrame(columns=["Classifier", "Accuracy", "Precision", "Recall", "F1 score"])
+    if save_results:        
         if "DecisionTreeClassifier()" in str(name):
             df_results.loc[len(df_results)] = ["Decision Tree", accuracy, precision, recall, f1]
         
